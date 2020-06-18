@@ -23,11 +23,16 @@
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="id" label="头像" align="center">
         <template slot-scope="scope">
-          <img @click="goDetail"
+          <a
+            href="http://a-ssl.duitang.com/uploads/item/201812/29/20181229212334_tvakj.thumb.700_0.jpeg"
+            target="_blank"
+          >
+            <img
               src="http://a-ssl.duitang.com/uploads/item/201812/29/20181229212334_tvakj.thumb.700_0.jpeg"
               alt
               class="img"
             />
+          </a>
         </template>
       </el-table-column>
       <el-table-column prop="id" label="姓名" align="center"></el-table-column>
@@ -77,8 +82,8 @@
       <el-table-column fixed="right" label="操作" align="center" width="120">
         <template slot-scope="scope">
           <!-- <el-button @click="handleClick(scope.row,1)" type="text" size="small">查看</el-button> -->
-          <!-- <el-button @click="handleClick(scope.row,1)" type="text" size="small">操作</el-button> -->
-          <el-dropdown @command="handleCommand(scope.row,$event)">
+          <el-button @click="handleClick(scope.row,1)" type="text" size="small">移除</el-button>
+          <!-- <el-dropdown @command="handleCommand(scope.row,$event)">
             <span class="el-dropdown-link" style="color:#1890ff;">操作</span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="1">设置热门</el-dropdown-item>
@@ -86,11 +91,11 @@
               <el-dropdown-item command="3">禁用</el-dropdown-item>
               <el-dropdown-item command="4">删除</el-dropdown-item>
               <el-dropdown-item command="5">编辑</el-dropdown-item>
-              <el-dropdown-item command="6">私人定制</el-dropdown-item>
+              <el-dropdown-item command="6">私人订制</el-dropdown-item>
               <el-dropdown-item command="7">客服接待</el-dropdown-item>
               <el-dropdown-item command="8">调整提成</el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
+          </el-dropdown> -->
         </template>
       </el-table-column>
     </el-table>
@@ -288,51 +293,12 @@
         ></el-pagination>
       </div>
     </el-dialog>
-
-    <el-dialog title="推荐理由" :visible.sync="recommendDialog">
-      <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="recommendText"></el-input>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="recommendDialog = false">取 消</el-button>
-        <el-button type="primary" @click="recommendDialog = false">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="选择客服" :visible.sync="kefuDialog">
-      <el-table :data="tableData">
-        <el-table-column property="id" label="客服编号"></el-table-column>
-        <el-table-column property="id" label="客服名称"></el-table-column>
-        <el-table-column property="id" label="当前接待客服数"></el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <span @click="selKefu(scope.row,1)" type="text" size="small" v-if="true">选择</span>
-            <el-button @click="selKefu(scope.row,2)" type="text" size="small" v-else>取消选择</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div slot="footer" class="dialog-footer">
-    <el-button @click="kefuDialog = false">取 消</el-button>
-    <el-button type="primary" @click="kefuDialog = false">确 定</el-button>
-  </div>
-</el-dialog>
-    </el-dialog>
-    <el-dialog title="调整提成比例" :visible.sync="commissionDialog">
-      <el-input v-model="commission"><template slot="append">%</template></el-input>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="commissionDialog = false">取 消</el-button>
-    <el-button type="primary" @click="commissionDialog = false">确 定</el-button>
-  </div>
-</el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      recommendDialog: false,//推荐理由
-      kefuDialog:false,
-      commissionDialog:false,//提成比例
-      commission:'',
-      recommendText:'',
       options: [
         {
           value: "选项1",
@@ -414,36 +380,25 @@ export default {
     };
   },
   methods: {
-    selKefu(row,index){
-      if(index==1){//选择客服
-        
-      }else{//取消选择
-
-      }
-    },
     //删除评价
-    delAssess(row) {},
-    lookArticle(row) {
-      this.$alert("这是一段内容啊", "文章标题", {
-        confirmButtonText: "确定",
-        callback: action => {
-          // this.$message({
-          //   type: 'info',
-          //   message: `action: ${ action }`
-          // });
-        }
-      });
+    delAssess(row){
+
     },
-    goDetail(row){
-      this.$router.push({path:'/consultant/info',query:{id:row.id}})
+    lookArticle(row){
+      this.$alert('这是一段内容啊', '文章标题', {
+          confirmButtonText: '确定',
+          callback: action => {
+            // this.$message({
+            //   type: 'info',
+            //   message: `action: ${ action }`
+            // });
+          }
+        });
     },
     //课程操作
     course(row, index) {
-      if (index == 1) {
-        this.$router.push({
-          path: "/consultant/chapter",
-          query: { id: row.id }
-        });
+      if(index==1){
+          this.$router.push({path:'/consultant/chapter',query:{id:row.id}})
       }
     },
     //操作选项
@@ -451,17 +406,6 @@ export default {
       switch (command) {
         case "1":
           this.setHot();
-          break;
-        case "2":
-          break;
-        case "6":
-          this.recommendDialog = true;
-          break;
-        case '7':
-          this.kefuDialog=true;
-          break;
-        case '8':
-          this.commissionDialog=true
           break;
       }
     },
@@ -477,11 +421,7 @@ export default {
     //清空搜索框触发
     clearInput() {},
     handleClick(row, index) {
-      if (index == 1) {
-        //this.form={...row}
-        this.dialogFormVisible = true;
-      } else {
-        this.$confirm("此操作将删除该用户, 是否继续?", "提示", {
+      this.$confirm("此操作将移除该用户, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -498,7 +438,6 @@ export default {
               message: "已取消操作"
             });
           });
-      }
     },
     view(row, index) {
       if (index == 1) {
@@ -509,11 +448,11 @@ export default {
         this.dialog3 = true;
       } else if (index == 4) {
         this.dialog4 = true;
-      } else if (index == 5) {
+      }else if (index == 5) {
         this.dialog5 = true;
-      } else if (index == 6) {
+      }else if (index == 6) {
         this.dialog6 = true;
-      } else if (index == 7) {
+      }else if (index == 7) {
         this.dialog7 = true;
       }
     },
@@ -578,7 +517,7 @@ export default {
       this.pageNo4 = 1;
       this.getList();
     },
-    handleSizeChange5(val) {
+   handleSizeChange5(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize5 = val;
       this.pageNo5 = 1;
@@ -586,7 +525,7 @@ export default {
     },
     handleCurrentChange5(val) {
       console.log(`当前页: ${val}`);
-      this.pageNo5 = val;
+      this.pageNo5= val;
       this.getList();
     },
     handleSizeChange6(val) {

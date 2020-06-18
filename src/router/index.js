@@ -66,6 +66,40 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/chapterList',
+    name: 'chapterList',
+    component: Layout,
+    redirect: '/consultant/chapter',
+    meta: { title: '章节列表', icon: 'documentation' },
+    hidden: true,
+    children: [
+      { 
+        name: 'chapter',
+        path: '/consultant/chapter',
+        component: () => import('@/views/consultant/chapter'),
+        meta: { title: '查看章节', icon: 'list' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/consultantInfo',
+    name: 'info',
+    component: Layout,
+    redirect: '/consultant/info',
+    meta: { title: '基本资料', icon: 'documentation' },
+    hidden: true,
+    children: [
+      { 
+        name: 'chapter',
+        path: '/consultant/info',
+        component: () => import('@/views/consultant/info'),
+        meta: { title: '基本资料', icon: 'list' },
+        hidden: true
+      }
+    ]
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dataMgt'
@@ -83,7 +117,7 @@ export const asyncRoutes = [
     name:'dataMgt',
     component:Layout,
     redirect:'/dataMgt/showData',
-    meta:{title:'数据概括',icon:'documentation'},
+    meta:{title:'数据概括',icon:'documentation',roles: ['admin','data1']},
     children:[
       { name:'/showData',
         path:'/dataMgt/showData',
@@ -97,7 +131,7 @@ export const asyncRoutes = [
     name:'userMgt',
     component:Layout,
     redirect:'/userMgt/index',
-    meta:{title:'用户管理',icon:'documentation'},
+    meta:{title:'用户管理',icon:'documentation',roles:['admin','user1']},
     children:[
       { name:'user',
         path:'/userMgt/index',
@@ -111,7 +145,7 @@ export const asyncRoutes = [
     name:'consultant',
     component:Layout,
     redirect:'/consultant/class',
-    meta:{title:'咨询师管理',icon:'list'},
+    meta:{title:'咨询师管理',icon:'list',roles:['admin','cons1','cons2','cons3']},
     children:[
       { name:'conclass',
         path:'/consultant/class',
@@ -122,6 +156,25 @@ export const asyncRoutes = [
         path:'/consultant/list',
         component: () => import('@/views/consultant/list'),
         meta:{title:'咨询师列表',icon:'list',roles:['admin','cons2']}
+      },
+      { name:'custom',
+        path:'/consultant/custom',
+        component: () => import('@/views/consultant/custom'),
+        meta:{title:'私人定制',icon:'list',roles:['admin','cons3']}
+      }
+    ]
+  },
+  {
+    path:'/orderMgt',
+    name:'orderMgt',
+    component:Layout,
+    redirect:'/orderMgt/advisory',
+    meta:{title:'订单管理',icon:'documentation',roles:['admin','order1','order2','order3']},
+    children:[
+      { name:'user',
+        path:'/orderMgt/advisory',
+        component: () => import('@/views/orderMgt/advisory'),
+        meta:{title:'咨询订单',icon:'list',roles:['admin','order1']}
       }
     ]
   },
