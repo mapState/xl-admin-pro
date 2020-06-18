@@ -73,7 +73,7 @@ export const constantRoutes = [
     meta: { title: '章节列表', icon: 'documentation' },
     hidden: true,
     children: [
-      { 
+      {
         name: 'chapter',
         path: '/consultant/chapter',
         component: () => import('@/views/consultant/chapter'),
@@ -90,11 +90,28 @@ export const constantRoutes = [
     meta: { title: '基本资料', icon: 'documentation' },
     hidden: true,
     children: [
-      { 
+      {
         name: 'chapter',
         path: '/consultant/info',
         component: () => import('@/views/consultant/info'),
         meta: { title: '基本资料', icon: 'list' },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/createOrder',
+    name: 'createOrder',
+    component: Layout,
+    redirect: '/orderMgt/create',
+    meta: { title: '创建订单', icon: 'documentation' },
+    hidden: true,
+    children: [
+      {
+        name: 'create',
+        path: '/orderMgt/create',
+        component: () => import('@/views/orderMgt/create'),
+        meta: { title: '创建订单', icon: 'list' },
         hidden: true
       }
     ]
@@ -169,12 +186,81 @@ export const asyncRoutes = [
     name:'orderMgt',
     component:Layout,
     redirect:'/orderMgt/advisory',
-    meta:{title:'订单管理',icon:'documentation',roles:['admin','order1','order2','order3']},
+    meta:{title:'订单管理',icon:'documentation',roles:['admin','order1','order2','order3','order4']},
     children:[
-      { name:'user',
+      { name:'advis',
         path:'/orderMgt/advisory',
         component: () => import('@/views/orderMgt/advisory'),
         meta:{title:'咨询订单',icon:'list',roles:['admin','order1']}
+      },
+      { name:'course',
+        path:'/orderMgt/course',
+        component: () => import('@/views/orderMgt/course'),
+        meta:{title:'咨询订单',icon:'list',roles:['admin','order2']}
+      },
+      { name:'test',
+        path:'/orderMgt/test',
+        component: () => import('@/views/orderMgt/test'),
+        meta:{title:'测评订单',icon:'list',roles:['admin','order3']}
+      },
+      { name:'dispatch',
+        path:'/orderMgt/dispatch',
+        component: () => import('@/views/orderMgt/dispatch'),
+        meta:{title:'抢单派单',icon:'list',roles:['admin','order4']}
+      }
+    ]
+  },
+  {
+    path:'/checkMgt',
+    name:'checkMgt',
+    component:Layout,
+    redirect:'/checkMgt/article',
+    meta:{title:'审核管理',icon:'documentation',roles:['admin','check1','check2','check3']},
+    children:[
+      { name:'check1',
+        path:'/checkMgt/article',
+        component: () => import('@/views/checkMgt/article'),
+        meta:{title:'文章审核',icon:'list',roles:['admin','check1']}
+      },
+      { name:'check2',
+        path:'/checkMgt/withdraw',
+        component: () => import('@/views/checkMgt/withdraw'),
+        meta:{title:'提现审核',icon:'list',roles:['admin','check2']}
+      },
+      { name:'check3',
+        path:'/checkMgt/consultant',
+        component: () => import('@/views/checkMgt/consultant'),
+        meta:{title:'咨询师审核',icon:'list',roles:['admin','check3']}
+      },
+      { name:'check4',
+        path:'/checkMgt/info',
+        component: () => import('@/views/checkMgt/info'),
+        meta:{title:'资料修改审核',icon:'list',roles:['admin','check4']}
+      }
+    ]
+  },
+  {
+    path:'/service',
+    name:'/service',
+    component:Layout,
+    redirect:'/service/class',
+    meta:{title:'服务管理',icon:'documentation',roles:['admin','service1']},
+    children:[
+      { name:'service1',
+        path:'/service/class',
+        component: () => import('@/views/serviceMgt/class'),
+        meta:{title:'分类管理',icon:'list',roles:['admin','service1']}
+      },
+      { name:'subClass',
+        path:'/service/subClass',
+        component: () => import('@/views/serviceMgt/subClass'),
+        meta:{title:'分类管理',icon:'list'},
+        hidden: true
+      },
+      { name:'service2',
+        path:'/service/list',
+        component: () => import('@/views/serviceMgt/list'),
+        meta:{title:'服务列表',icon:'list',roles:['admin','service2']}
       }
     ]
   },

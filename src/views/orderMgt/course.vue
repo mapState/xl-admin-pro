@@ -57,7 +57,6 @@
       <el-table-column prop="id" label="咨询师" align="center"></el-table-column>
       <el-table-column fixed="right" label="操作" align="center">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row,1)" type="text" size="small">退款</el-button>
           <el-button @click="handleClick(scope.row,2)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -106,6 +105,7 @@ export default {
     };
   },
   methods: {
+    getList() {},
     //清空搜索框触发
     clearInput() {},
     handleClick(row, index) {
